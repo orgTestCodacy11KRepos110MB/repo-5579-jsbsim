@@ -4,7 +4,7 @@
 <html lang="en">
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
 
     <title>FGEngine &#8212; JSBSim 1.1.13 documentation</title>
     <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
@@ -14,7 +14,6 @@
     <script src="_static/underscore.js"></script>
     <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
     <script src="_static/doctools.js"></script>
-    <script src="_static/sphinx_highlight.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
     <link rel="next" title="FGFDMExec" href="FGFDMExec.html" />
@@ -117,6 +116,42 @@
             
   <section id="fgengine">
 <span id="id1"></span><h1>FGEngine<a class="headerlink" href="#fgengine" title="Permalink to this heading">¶</a></h1>
+<dl class="py class">
+<dt class="sig sig-object py" id="jsbsim.FGEngine">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">jsbsim.</span></span><span class="sig-name descname"><span class="pre">FGEngine</span></span><a class="headerlink" href="#jsbsim.FGEngine" title="Permalink to this definition">¶</a></dt>
+<dd><p>Base class for all engines.</p>
+<p>This base class contains methods and members common to all engines, such
+as logic to drain fuel from the appropriate tank, etc.</p>
+<p class="rubric">Configuration File Format:</p>
+<div class="highlight-xml notranslate"><div class="highlight"><pre><span></span><span class="nt">&lt;engine</span> <span class="na">file=</span><span class="s">&quot;{string}&quot;</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;feed&gt;</span> {integer} <span class="nt">&lt;/feed&gt;</span>
+    ... optional more feed tank index numbers ... 
+    <span class="nt">&lt;thruster</span> <span class="na">file=</span><span class="s">&quot;{string}&quot;</span><span class="nt">&gt;</span>
+        <span class="nt">&lt;location</span> <span class="na">unit=</span><span class="s">&quot;{IN | M}&quot;</span><span class="nt">&gt;</span>
+            <span class="nt">&lt;x&gt;</span> {number} <span class="nt">&lt;/x&gt;</span>
+            <span class="nt">&lt;y&gt;</span> {number} <span class="nt">&lt;/y&gt;</span>
+            <span class="nt">&lt;z&gt;</span> {number} <span class="nt">&lt;/z&gt;</span>
+        <span class="nt">&lt;/location&gt;</span>
+        <span class="nt">&lt;orient</span> <span class="na">unit=</span><span class="s">&quot;{RAD | DEG}&quot;</span><span class="nt">&gt;</span>
+            <span class="nt">&lt;roll&gt;</span> {number} <span class="nt">&lt;/roll&gt;</span>
+            <span class="nt">&lt;pitch&gt;</span> {number} <span class="nt">&lt;/pitch&gt;</span>
+            <span class="nt">&lt;yaw&gt;</span> {number} <span class="nt">&lt;/yaw&gt;</span>
+        <span class="nt">&lt;/orient&gt;</span>
+    <span class="nt">&lt;/thruster&gt;</span>
+<span class="nt">&lt;/engine&gt;</span>
+</pre></div>
+</div>
+<dl class="py method">
+<dt class="sig sig-object py" id="jsbsim.FGEngine.init_running">
+<span class="sig-name descname"><span class="pre">init_running</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#jsbsim.FGEngine.init_running" title="Permalink to this definition">¶</a></dt>
+<dd><div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>This feature is not yet documented.</p>
+</div>
+</dd></dl>
+
+</dd></dl>
+
 </section>
 
 
@@ -127,10 +162,10 @@
     <div class="clearer"></div>
   </div>
     <div class="footer">
-      &copy;2021, The JSBSim team.
+      &copy;2023, The JSBSim team.
       
       |
-      Powered by <a href="http://sphinx-doc.org/">Sphinx 5.3.0</a>
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 5.0.2</a>
       &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
       
       |

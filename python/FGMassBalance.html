@@ -4,7 +4,7 @@
 <html lang="en">
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
 
     <title>FGMassBalance &#8212; JSBSim 1.1.13 documentation</title>
     <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
@@ -14,7 +14,6 @@
     <script src="_static/underscore.js"></script>
     <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
     <script src="_static/doctools.js"></script>
-    <script src="_static/sphinx_highlight.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
     <link rel="next" title="FGPropagate" href="FGPropagate.html" />
@@ -117,6 +116,81 @@
             
   <section id="fgmassbalance">
 <span id="id1"></span><h1>FGMassBalance<a class="headerlink" href="#fgmassbalance" title="Permalink to this heading">¶</a></h1>
+<dl class="py class">
+<dt class="sig sig-object py" id="jsbsim.FGMassBalance">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">jsbsim.</span></span><span class="sig-name descname"><span class="pre">FGMassBalance</span></span><a class="headerlink" href="#jsbsim.FGMassBalance" title="Permalink to this definition">¶</a></dt>
+<dd><p>Models weight, balance and moment of inertia information.</p>
+<p>Maintains a vector of point masses. Sums the contribution of all, and
+provides this to <a class="reference internal" href="FGPropagate.html#fgpropagate"><span class="std std-ref">FGPropagate</span></a>. Loads the &lt;mass_balance&gt; section of
+the aircraft configuration file. There can be any number of
+&lt;pointmasses&gt;. Each can also have a shape which - if present - causes an
+associated moment of inertia to be calculated based on the shape. Note
+that a cylinder is solid, a tube is hollow, a ball is solid and a sphere
+is hollow.</p>
+<p>The inertia tensor must be specified in the structural frame (x axis
+positive aft, y axis positive out of the right wing and z axis upward).
+The sign of the inertia cross products are optional by JSBSim. if
+negated_crossproduct_inertia == “true”, then define: ixy = -integral( x
+* y * dm ), ixz = -integral( x * z * dm ), iyz = -integral( y * z * dm
+). else if negated_crossproduct_inertia == “false”, then define: ixy =
+integral( x * y * dm ), ixz = integral( x * z * dm ), iyz = integral( y
+* z * dm ). default is negated_crossproduct_inertia = “true”. We
+strongly recommend defining negated_crossproduct_inertia = “false”,
+which is consistent with the specifications in the field of flight
+dynamics.</p>
+<p class="rubric">Configuration File Format for &lt;mass_balance&gt; Section:</p>
+<div class="highlight-xml notranslate"><div class="highlight"><pre><span></span><span class="nt">&lt;mass_balance</span> <span class="na">negated_crossproduct_inertia=</span><span class="s">&quot;true|false&quot;</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;ixx</span> <span class="na">unit=</span><span class="s">&quot;{SLUG*FT2 | KG*M2}&quot;</span><span class="nt">&gt;</span> {number} <span class="nt">&lt;/ixx&gt;</span>
+    <span class="nt">&lt;iyy</span> <span class="na">unit=</span><span class="s">&quot;{SLUG*FT2 | KG*M2}&quot;</span><span class="nt">&gt;</span> {number} <span class="nt">&lt;/iyy&gt;</span>
+    <span class="nt">&lt;izz</span> <span class="na">unit=</span><span class="s">&quot;{SLUG*FT2 | KG*M2}&quot;</span><span class="nt">&gt;</span> {number} <span class="nt">&lt;/izz&gt;</span>
+    <span class="nt">&lt;ixy</span> <span class="na">unit=</span><span class="s">&quot;{SLUG*FT2 | KG*M2}&quot;</span><span class="nt">&gt;</span> {number} <span class="nt">&lt;/ixy&gt;</span>
+    <span class="nt">&lt;ixz</span> <span class="na">unit=</span><span class="s">&quot;{SLUG*FT2 | KG*M2}&quot;</span><span class="nt">&gt;</span> {number} <span class="nt">&lt;/ixz&gt;</span>
+    <span class="nt">&lt;iyz</span> <span class="na">unit=</span><span class="s">&quot;{SLUG*FT2 | KG*M2}&quot;</span><span class="nt">&gt;</span> {number} <span class="nt">&lt;/iyz&gt;</span>
+    <span class="nt">&lt;emptywt</span> <span class="na">unit=</span><span class="s">&quot;{LBS | KG&quot;</span><span class="nt">&gt;</span> {number} <span class="nt">&lt;/emptywt&gt;</span>
+    <span class="nt">&lt;location</span> <span class="na">name=</span><span class="s">&quot;CG&quot;</span> <span class="na">unit=</span><span class="s">&quot;{IN | FT | M}&quot;</span><span class="nt">&gt;</span>
+        <span class="nt">&lt;x&gt;</span> {number} <span class="nt">&lt;/x&gt;</span>
+        <span class="nt">&lt;y&gt;</span> {number} <span class="nt">&lt;/y&gt;</span>
+        <span class="nt">&lt;z&gt;</span> {number} <span class="nt">&lt;/z&gt;</span>
+    <span class="nt">&lt;/location&gt;</span>
+    [<span class="nt">&lt;pointmass</span> <span class="na">name=</span><span class="s">&quot;{string}&quot;</span><span class="nt">&gt;</span>
+        <span class="nt">&lt;form</span> <span class="na">shape=</span><span class="s">&quot;{tube | cylinder | sphere | ball}&quot;</span><span class="nt">&gt;</span>
+           <span class="nt">&lt;radius</span> <span class="na">unit=</span><span class="s">&quot;{IN | FT | M}&quot;</span><span class="nt">&gt;</span> {number} <span class="nt">&lt;/radius&gt;</span>
+           <span class="nt">&lt;length</span> <span class="na">unit=</span><span class="s">&quot;{IN | FT | M}&quot;</span><span class="nt">&gt;</span> {number} <span class="nt">&lt;/length&gt;</span>
+        <span class="nt">&lt;/form&gt;</span> 
+        <span class="nt">&lt;weight</span> <span class="na">unit=</span><span class="s">&quot;{LBS | KG}&quot;</span><span class="nt">&gt;</span> {number} <span class="nt">&lt;/weight&gt;</span>
+        <span class="nt">&lt;location</span> <span class="na">name=</span><span class="s">&quot;{string}&quot;</span> <span class="na">unit=</span><span class="s">&quot;{IN | FT | M}&quot;</span><span class="nt">&gt;</span>
+            <span class="nt">&lt;x&gt;</span> {number} <span class="nt">&lt;/x&gt;</span>
+            <span class="nt">&lt;y&gt;</span> {number} <span class="nt">&lt;/y&gt;</span>
+            <span class="nt">&lt;z&gt;</span> {number} <span class="nt">&lt;/z&gt;</span>
+        <span class="nt">&lt;/location&gt;</span>
+    <span class="nt">&lt;/pointmass&gt;</span>
+    ... other point masses ...]
+<span class="nt">&lt;/mass_balance&gt;</span>
+</pre></div>
+</div>
+<dl class="py method">
+<dt class="sig sig-object py" id="jsbsim.FGMassBalance.get_J">
+<span class="sig-name descname"><span class="pre">get_J</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#jsbsim.FGMassBalance.get_J" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the inertia matrix expressed in the body frame.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="jsbsim.FGMassBalance.get_Jinv">
+<span class="sig-name descname"><span class="pre">get_Jinv</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#jsbsim.FGMassBalance.get_Jinv" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the inverse of the inertia matrix expressed in the body frame.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="jsbsim.FGMassBalance.get_xyz_cg">
+<span class="sig-name descname"><span class="pre">get_xyz_cg</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#jsbsim.FGMassBalance.get_xyz_cg" title="Permalink to this definition">¶</a></dt>
+<dd><div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>This feature is not yet documented.</p>
+</div>
+</dd></dl>
+
+</dd></dl>
+
 </section>
 
 
@@ -127,10 +201,10 @@
     <div class="clearer"></div>
   </div>
     <div class="footer">
-      &copy;2021, The JSBSim team.
+      &copy;2023, The JSBSim team.
       
       |
-      Powered by <a href="http://sphinx-doc.org/">Sphinx 5.3.0</a>
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 5.0.2</a>
       &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
       
       |

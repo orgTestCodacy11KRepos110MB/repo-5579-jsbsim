@@ -4,7 +4,7 @@
 <html lang="en">
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
 
     <title>FGPropulsion &#8212; JSBSim 1.1.13 documentation</title>
     <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
@@ -14,7 +14,6 @@
     <script src="_static/underscore.js"></script>
     <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
     <script src="_static/doctools.js"></script>
-    <script src="_static/sphinx_highlight.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
     <link rel="prev" title="FGPropertyManager" href="FGPropertyManager.html" />
@@ -115,6 +114,68 @@
             
   <section id="fgpropulsion">
 <span id="id1"></span><h1>FGPropulsion<a class="headerlink" href="#fgpropulsion" title="Permalink to this heading">¶</a></h1>
+<dl class="py class">
+<dt class="sig sig-object py" id="jsbsim.FGPropulsion">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">jsbsim.</span></span><span class="sig-name descname"><span class="pre">FGPropulsion</span></span><a class="headerlink" href="#jsbsim.FGPropulsion" title="Permalink to this definition">¶</a></dt>
+<dd><p>Propulsion management class.</p>
+<p>The Propulsion class is the container for the entire propulsion system,
+which is comprised of engines, and tanks. Once the Propulsion class gets
+the config file, it reads in the &lt;propulsion&gt; section. Then:</p>
+<ol class="arabic simple">
+<li><p>The appropriate engine type instance is created</p></li>
+<li><p>At least one tank object is created, and is linked to an engine.</p></li>
+</ol>
+<p>At Run time each engine’s Calculate() method is called.</p>
+<p class="rubric">Configuration File Format:</p>
+<div class="highlight-xml notranslate"><div class="highlight"><pre><span></span><span class="nt">&lt;propulsion&gt;</span>
+    <span class="nt">&lt;engine</span> <span class="na">file=</span><span class="s">&quot;{string}&quot;</span><span class="nt">&gt;</span>
+      ... see FGEngine, FGThruster, and class for engine type ...
+    <span class="nt">&lt;/engine&gt;</span>
+    ... more engines ...
+    <span class="nt">&lt;tank</span> <span class="na">type=</span><span class="s">&quot;{FUEL | OXIDIZER}&quot;</span><span class="nt">&gt;</span> 
+      ... see FGTank ...
+    <span class="nt">&lt;/tank&gt;</span>
+    ... more tanks ...
+    <span class="nt">&lt;dump-rate</span> <span class="na">unit=</span><span class="s">&quot;{LBS/MIN | KG/MIN}&quot;</span><span class="nt">&gt;</span> {number} <span class="nt">&lt;/dump-rate&gt;</span>
+    <span class="nt">&lt;refuel-rate</span> <span class="na">unit=</span><span class="s">&quot;{LBS/MIN | KG/MIN}&quot;</span><span class="nt">&gt;</span> {number} <span class="nt">&lt;/refuel-rate&gt;</span>
+<span class="nt">&lt;/propulsion&gt;</span>
+</pre></div>
+</div>
+<dl class="py method">
+<dt class="sig sig-object py" id="jsbsim.FGPropulsion.get_engine">
+<span class="sig-name descname"><span class="pre">get_engine</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#jsbsim.FGPropulsion.get_engine" title="Permalink to this definition">¶</a></dt>
+<dd><p>Retrieves an engine object pointer from the list of engines.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>index</strong> – the engine index within the vector container</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>the address of the specific engine, or zero if no such
+engine is available</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="jsbsim.FGPropulsion.get_num_engines">
+<span class="sig-name descname"><span class="pre">get_num_engines</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#jsbsim.FGPropulsion.get_num_engines" title="Permalink to this definition">¶</a></dt>
+<dd><p>Retrieves the number of engines defined for the aircraft.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="jsbsim.FGPropulsion.get_steady_state">
+<span class="sig-name descname"><span class="pre">get_steady_state</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#jsbsim.FGPropulsion.get_steady_state" title="Permalink to this definition">¶</a></dt>
+<dd><p>Loops the engines until thrust output steady (used for trimming)</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="jsbsim.FGPropulsion.init_running">
+<span class="sig-name descname"><span class="pre">init_running</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#jsbsim.FGPropulsion.init_running" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sets up the engines as running.</p>
+</dd></dl>
+
+</dd></dl>
+
 </section>
 
 
@@ -125,10 +186,10 @@
     <div class="clearer"></div>
   </div>
     <div class="footer">
-      &copy;2021, The JSBSim team.
+      &copy;2023, The JSBSim team.
       
       |
-      Powered by <a href="http://sphinx-doc.org/">Sphinx 5.3.0</a>
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 5.0.2</a>
       &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
       
       |

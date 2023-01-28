@@ -4,7 +4,7 @@
 <html lang="en">
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
 
     <title>FGAerodynamics &#8212; JSBSim 1.1.13 documentation</title>
     <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
@@ -14,7 +14,6 @@
     <script src="_static/underscore.js"></script>
     <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
     <script src="_static/doctools.js"></script>
-    <script src="_static/sphinx_highlight.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
     <link rel="next" title="FGAircraft" href="FGAircraft.html" />
@@ -117,6 +116,82 @@
             
   <section id="fgaerodynamics">
 <span id="id1"></span><h1>FGAerodynamics<a class="headerlink" href="#fgaerodynamics" title="Permalink to this heading">¶</a></h1>
+<dl class="py class">
+<dt class="sig sig-object py" id="jsbsim.FGAerodynamics">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">jsbsim.</span></span><span class="sig-name descname"><span class="pre">FGAerodynamics</span></span><a class="headerlink" href="#jsbsim.FGAerodynamics" title="Permalink to this definition">¶</a></dt>
+<dd><p>Encapsulates the aerodynamic calculations.</p>
+<p>This class owns and contains the list of force/coefficients that define
+the aerodynamic properties of an aircraft. Here also, such unique
+phenomena as ground effect, aerodynamic reference point shift, and
+maximum lift curve tailoff are handled.</p>
+<p class="rubric">Configuration File Format for &lt;aerodynamics&gt; Section:</p>
+<div class="highlight-xml notranslate"><div class="highlight"><pre><span></span><span class="nt">&lt;aerodynamics&gt;</span>
+   <span class="nt">&lt;alphalimits</span> <span class="na">unit=</span><span class="s">&quot;{RAD | DEG}&quot;</span><span class="nt">&gt;</span>
+     <span class="nt">&lt;min&gt;</span> {number} <span class="nt">&lt;/min&gt;</span>
+     <span class="nt">&lt;max&gt;</span> {number} <span class="nt">&lt;/max&gt;</span>
+   <span class="nt">&lt;/alphalimits&gt;</span>
+   <span class="nt">&lt;hysteresis_limits</span> <span class="na">unit=</span><span class="s">&quot;{RAD | DEG}&quot;</span><span class="nt">&gt;</span>
+     <span class="nt">&lt;min&gt;</span> {number} <span class="nt">&lt;/min&gt;</span>
+     <span class="nt">&lt;max&gt;</span> {number} <span class="nt">&lt;/max&gt;</span>
+   <span class="nt">&lt;/hysteresis_limits&gt;</span>
+   <span class="nt">&lt;aero_ref_pt_shift_x&gt;</span>  
+     <span class="nt">&lt;function&gt;</span>
+       {function contents}
+     <span class="nt">&lt;/function&gt;</span> 
+   <span class="nt">&lt;/aero_ref_pt_shift_x&gt;</span>  
+   <span class="nt">&lt;function&gt;</span>
+     {function contents}
+   <span class="nt">&lt;/function&gt;</span>
+   <span class="nt">&lt;axis</span> <span class="na">name=</span><span class="s">&quot;{LIFT | DRAG | SIDE | ROLL | PITCH | YAW}&quot;</span><span class="nt">&gt;</span>
+     {force or moment definitions}
+   <span class="nt">&lt;/axis&gt;</span>
+   {additional axis definitions}
+<span class="nt">&lt;/aerodynamics&gt;</span>
+</pre></div>
+</div>
+<p>Optionally two other coordinate systems may be used.</p>
+<ol class="arabic simple">
+<li><p>Body coordinate system:</p></li>
+</ol>
+<div class="highlight-xml notranslate"><div class="highlight"><pre><span></span><span class="nt">&lt;axis</span> <span class="na">name=</span><span class="s">&quot;{X | Y | Z}&quot;</span><span class="nt">&gt;</span>
+</pre></div>
+</div>
+<ol class="arabic simple" start="2">
+<li><p>Axial-Normal coordinate system:</p></li>
+</ol>
+<div class="highlight-xml notranslate"><div class="highlight"><pre><span></span><span class="nt">&lt;axis</span> <span class="na">name=</span><span class="s">&quot;{AXIAL | NORMAL | SIDE}&quot;</span><span class="nt">&gt;</span>
+</pre></div>
+</div>
+<p>Systems may NOT be combined, or a load error will occur.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="jsbsim.FGAerodynamics.get_forces">
+<span class="sig-name descname"><span class="pre">get_forces</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#jsbsim.FGAerodynamics.get_forces" title="Permalink to this definition">¶</a></dt>
+<dd><p>Gets the aerodynamic force for an axis.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>n</strong> – Axis index. This could be 0, 1, or 2, or one of the axis
+enums: eX, eY, eZ.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>the force acting on an axis</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="jsbsim.FGAerodynamics.get_moments_MRC">
+<span class="sig-name descname"><span class="pre">get_moments_MRC</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#jsbsim.FGAerodynamics.get_moments_MRC" title="Permalink to this definition">¶</a></dt>
+<dd><p>Gets the aerodynamic moment about the Moment Reference Center for an axis.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>the moment about a single axis (as described also in the
+similar call to GetForces(int n).</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
 </section>
 
 
@@ -127,10 +202,10 @@
     <div class="clearer"></div>
   </div>
     <div class="footer">
-      &copy;2021, The JSBSim team.
+      &copy;2023, The JSBSim team.
       
       |
-      Powered by <a href="http://sphinx-doc.org/">Sphinx 5.3.0</a>
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 5.0.2</a>
       &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
       
       |

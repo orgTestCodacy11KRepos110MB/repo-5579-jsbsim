@@ -4,7 +4,7 @@
 <html lang="en">
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
 
     <title>FGAircraft &#8212; JSBSim 1.1.13 documentation</title>
     <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
@@ -14,7 +14,6 @@
     <script src="_static/underscore.js"></script>
     <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
     <script src="_static/doctools.js"></script>
-    <script src="_static/sphinx_highlight.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
     <link rel="next" title="FGAtmosphere" href="FGAtmosphere.html" />
@@ -117,6 +116,48 @@
             
   <section id="fgaircraft">
 <span id="id1"></span><h1>FGAircraft<a class="headerlink" href="#fgaircraft" title="Permalink to this heading">¶</a></h1>
+<dl class="py class">
+<dt class="sig sig-object py" id="jsbsim.FGAircraft">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">jsbsim.</span></span><span class="sig-name descname"><span class="pre">FGAircraft</span></span><a class="headerlink" href="#jsbsim.FGAircraft" title="Permalink to this definition">¶</a></dt>
+<dd><p>Encapsulates an Aircraft and its systems.</p>
+<p>Owns all the parts (other classes) which make up this aircraft. This
+includes the Engines, Tanks, Propellers, Nozzles, Aerodynamic and Mass
+properties, landing gear, etc. These constituent parts may actually run
+as separate JSBSim models themselves, but the responsibility for
+initializing them and for retrieving their force and moment
+contributions falls to <a class="reference internal" href="#fgaircraft"><span class="std std-ref">FGAircraft</span></a>.</p>
+<p>The &lt;metrics&gt; section of the aircraft configuration file is read here,
+and the metrical information is held by this class.</p>
+<p class="rubric">Configuration File Format for &lt;metrics&gt; Section:</p>
+<div class="highlight-xml notranslate"><div class="highlight"><pre><span></span><span class="nt">&lt;metrics&gt;</span>
+    <span class="nt">&lt;wingarea</span> <span class="na">unit=</span><span class="s">&quot;{FT2 | M2}&quot;</span><span class="nt">&gt;</span> {number} <span class="nt">&lt;/wingarea&gt;</span>
+    <span class="nt">&lt;wingspan</span> <span class="na">unit=</span><span class="s">&quot;{FT | M}&quot;</span><span class="nt">&gt;</span> {number} <span class="nt">&lt;/wingspan&gt;</span>
+    <span class="nt">&lt;chord</span> <span class="na">unit=</span><span class="s">&quot;{FT | M}&quot;</span><span class="nt">&gt;</span> {number} <span class="nt">&lt;/chord&gt;</span>
+    <span class="nt">&lt;htailarea</span> <span class="na">unit=</span><span class="s">&quot;{FT2 | M2}&quot;</span><span class="nt">&gt;</span> {number} <span class="nt">&lt;/htailarea&gt;</span>
+    <span class="nt">&lt;htailarm</span> <span class="na">unit=</span><span class="s">&quot;{FT | M}&quot;</span><span class="nt">&gt;</span> {number} <span class="nt">&lt;/htailarm&gt;</span>
+    <span class="nt">&lt;vtailarea</span> <span class="na">unit=</span><span class="s">&quot;{FT2 | M}&quot;</span><span class="nt">&gt;</span> {number} <span class="nt">&lt;/vtailarea&gt;</span>
+    <span class="nt">&lt;vtailarm</span> <span class="na">unit=</span><span class="s">&quot;{FT | M}&quot;</span><span class="nt">&gt;</span> {number} <span class="nt">&lt;/vtailarm&gt;</span>
+    <span class="nt">&lt;wing_incidence</span> <span class="na">unit=</span><span class="s">&quot;{RAD | DEG}&quot;</span><span class="nt">&gt;</span> {number} <span class="nt">&lt;/wing_incidence&gt;</span>
+    <span class="nt">&lt;location</span> <span class="na">name=</span><span class="s">&quot;{AERORP | EYEPOINT | VRP}&quot;</span> <span class="na">unit=</span><span class="s">&quot;{IN | M}&quot;</span><span class="nt">&gt;</span>
+        <span class="nt">&lt;x&gt;</span> {number} <span class="nt">&lt;/x&gt;</span>
+        <span class="nt">&lt;y&gt;</span> {number} <span class="nt">&lt;/y&gt;</span>
+        <span class="nt">&lt;z&gt;</span> {number} <span class="nt">&lt;/z&gt;</span>
+    <span class="nt">&lt;/location&gt;</span>
+    {other location blocks}
+<span class="nt">&lt;/metrics&gt;</span>
+</pre></div>
+</div>
+<dl class="py method">
+<dt class="sig sig-object py" id="jsbsim.FGAircraft.get_xyz_rp">
+<span class="sig-name descname"><span class="pre">get_xyz_rp</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#jsbsim.FGAircraft.get_xyz_rp" title="Permalink to this definition">¶</a></dt>
+<dd><div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>This feature is not yet documented.</p>
+</div>
+</dd></dl>
+
+</dd></dl>
+
 </section>
 
 
@@ -127,10 +168,10 @@
     <div class="clearer"></div>
   </div>
     <div class="footer">
-      &copy;2021, The JSBSim team.
+      &copy;2023, The JSBSim team.
       
       |
-      Powered by <a href="http://sphinx-doc.org/">Sphinx 5.3.0</a>
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 5.0.2</a>
       &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
       
       |

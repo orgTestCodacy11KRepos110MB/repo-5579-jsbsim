@@ -4,7 +4,7 @@
 <html lang="en">
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
 
     <title>FGGroundReactions &#8212; JSBSim 1.1.13 documentation</title>
     <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
@@ -14,7 +14,6 @@
     <script src="_static/underscore.js"></script>
     <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
     <script src="_static/doctools.js"></script>
-    <script src="_static/sphinx_highlight.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
     <link rel="next" title="FGJSBBase" href="FGJSBBase.html" />
@@ -117,6 +116,51 @@
             
   <section id="fggroundreactions">
 <span id="id1"></span><h1>FGGroundReactions<a class="headerlink" href="#fggroundreactions" title="Permalink to this heading">¶</a></h1>
+<dl class="py class">
+<dt class="sig sig-object py" id="jsbsim.FGGroundReactions">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">jsbsim.</span></span><span class="sig-name descname"><span class="pre">FGGroundReactions</span></span><a class="headerlink" href="#jsbsim.FGGroundReactions" title="Permalink to this definition">¶</a></dt>
+<dd><p>Manages ground reactions modeling.</p>
+<p>Maintains a list of landing gear and ground contact points, all
+instances of <a class="reference internal" href="FGLGear.html#fglgear"><span class="std std-ref">FGLGear</span></a>. Sums their forces and moments so that these
+may be provided to <a class="reference internal" href="FGPropagate.html#fgpropagate"><span class="std std-ref">FGPropagate</span></a>. Parses the &lt;ground_reactions&gt;
+section of the aircraft configuration file.</p>
+<p class="rubric">Configuration File Format of &lt;ground_reactions&gt; Section:</p>
+<div class="highlight-xml notranslate"><div class="highlight"><pre><span></span><span class="nt">&lt;ground_reactions&gt;</span>
+    <span class="nt">&lt;contact&gt;</span>
+       ... {see FGLGear for specifics of this format}
+    <span class="nt">&lt;/contact&gt;</span>
+    ... {more contacts}
+<span class="nt">&lt;/ground_reactions&gt;</span>
+</pre></div>
+</div>
+<dl class="py method">
+<dt class="sig sig-object py" id="jsbsim.FGGroundReactions.get_gear_unit">
+<span class="sig-name descname"><span class="pre">get_gear_unit</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#jsbsim.FGGroundReactions.get_gear_unit" title="Permalink to this definition">¶</a></dt>
+<dd><p>Gets a gear instance.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>gear</strong> – index of gear instance</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>a pointer to the <a class="reference internal" href="FGLGear.html#fglgear"><span class="std std-ref">FGLGear</span></a> instance of the gear unit
+requested</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="jsbsim.FGGroundReactions.get_num_gear_units">
+<span class="sig-name descname"><span class="pre">get_num_gear_units</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#jsbsim.FGGroundReactions.get_num_gear_units" title="Permalink to this definition">¶</a></dt>
+<dd><p>Gets the number of gears.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>the number of gears of the aircraft.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
 </section>
 
 
@@ -127,10 +171,10 @@
     <div class="clearer"></div>
   </div>
     <div class="footer">
-      &copy;2021, The JSBSim team.
+      &copy;2023, The JSBSim team.
       
       |
-      Powered by <a href="http://sphinx-doc.org/">Sphinx 5.3.0</a>
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 5.0.2</a>
       &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
       
       |

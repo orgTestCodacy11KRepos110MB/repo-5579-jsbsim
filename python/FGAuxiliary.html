@@ -4,7 +4,7 @@
 <html lang="en">
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
 
     <title>FGAuxiliary &#8212; JSBSim 1.1.13 documentation</title>
     <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
@@ -14,7 +14,6 @@
     <script src="_static/underscore.js"></script>
     <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
     <script src="_static/doctools.js"></script>
-    <script src="_static/sphinx_highlight.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
     <link rel="next" title="FGEngine" href="FGEngine.html" />
@@ -117,6 +116,62 @@
             
   <section id="fgauxiliary">
 <span id="id1"></span><h1>FGAuxiliary<a class="headerlink" href="#fgauxiliary" title="Permalink to this heading">¶</a></h1>
+<dl class="py class">
+<dt class="sig sig-object py" id="jsbsim.FGAuxiliary">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">jsbsim.</span></span><span class="sig-name descname"><span class="pre">FGAuxiliary</span></span><a class="headerlink" href="#jsbsim.FGAuxiliary" title="Permalink to this definition">¶</a></dt>
+<dd><p>Encapsulates various uncategorized scheduled functions.</p>
+<p>Pilot sensed accelerations are calculated here. This is used for the
+coordinated turn ball instrument. Motion base platforms sometimes use
+the derivative of pilot sensed accelerations as the driving parameter,
+rather than straight accelerations.</p>
+<p>The theory behind pilot-sensed calculations is presented:</p>
+<p>For purposes of discussion and calculation, assume for a minute that the
+pilot is in space and motionless in inertial space. She will feel no
+accelerations. If the aircraft begins to accelerate along any axis or
+axes (without rotating), the pilot will sense those accelerations. If
+any rotational moment is applied, the pilot will sense an acceleration
+due to that motion in the amount:</p>
+<p>[wdot X R] + [w X (w X R)] Term I Term II</p>
+<p>where:</p>
+<p>wdot = omegadot, the rotational acceleration rate vector w = omega, the
+rotational rate vector R = the vector from the aircraft CG to the pilot
+eyepoint</p>
+<p>The sum total of these two terms plus the acceleration of the aircraft
+body axis gives the acceleration the pilot senses in inertial space. In
+the presence of a large body such as a planet, a gravity field also
+provides an accelerating attraction. This acceleration can be
+transformed from the reference frame of the planet so as to be expressed
+in the frame of reference of the aircraft. This gravity field
+accelerating attraction is felt by the pilot as a force on her tushie as
+she sits in her aircraft on the runway awaiting takeoff clearance.</p>
+<p>In JSBSim the acceleration of the body frame in inertial space is given
+by the F = ma relation. If the vForces vector is divided by the aircraft
+mass, the acceleration vector is calculated. The term wdot is equivalent
+to the JSBSim vPQRdot vector, and the w parameter is equivalent to vPQR.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="jsbsim.FGAuxiliary.get_Tb2w">
+<span class="sig-name descname"><span class="pre">get_Tb2w</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#jsbsim.FGAuxiliary.get_Tb2w" title="Permalink to this definition">¶</a></dt>
+<dd><p>Calculates and returns the body-to-wind axis transformation matrix.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>a reference to the wind-to-body transformation matrix.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="jsbsim.FGAuxiliary.get_Tw2b">
+<span class="sig-name descname"><span class="pre">get_Tw2b</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#jsbsim.FGAuxiliary.get_Tw2b" title="Permalink to this definition">¶</a></dt>
+<dd><p>Calculates and returns the wind-to-body axis transformation matrix.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>a reference to the wind-to-body transformation matrix.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
 </section>
 
 
@@ -127,10 +182,10 @@
     <div class="clearer"></div>
   </div>
     <div class="footer">
-      &copy;2021, The JSBSim team.
+      &copy;2023, The JSBSim team.
       
       |
-      Powered by <a href="http://sphinx-doc.org/">Sphinx 5.3.0</a>
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 5.0.2</a>
       &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
       
       |
